@@ -1,0 +1,27 @@
+.last-box{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+/*** Header ***/
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+.banner{
+    height: 400px;
+    background-image: url("../images/generic-brandless-modern-sport-car-with-fire-smoke.jpg");
+    background-size: cover;
+    background-position: center center;
+}
+.banner-title{
+    text-transform: uppercase;
+    color: white;
+    font-family: 'Russo One', sans-serif;
+    margin-top: 50px;
+}
+/*** EndHeader ***/
+/*** InfoGarage ***/
+.info-img{
+    height: 450px;
+    object-fit: cover;
+}
+.info-btn{
+    width: 100%;
+}

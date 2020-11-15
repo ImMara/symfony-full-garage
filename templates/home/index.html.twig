@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Garage - Home {% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-5">Nos derniers modéles</h1>
+    <div class="last-box row align-items-center justify-content-center">
+            <div class="col-md-4 mb-md-0 mb-2">
+                <div class="card border-warning" style="max-width: 20rem;">
+                    <div class="card-header">Header</div>
+                    <img src="https://picsum.photos/200/100" class="img-fluid"  alt="img">
+                    <div class="card-body">
+                        <h4 class="card-title">Warning card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-danger col-6">Voir plus ...</a>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-4 mb-md-0 mb-2">
+            <div class="card border-warning " style="max-width: 20rem;">
+                <div class="card-header">Header</div>
+                <img src="https://picsum.photos/200/100" class="img-fluid"  alt="img">
+                <div class="card-body">
+                    <h4 class="card-title">Warning card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-danger col-6">Voir plus ...</a>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4 mb-md-0 mb-2">
+            <div class="card border-warning" style="max-width: 20rem;">
+                <div class="card-header">Header</div>
+                <img src="https://picsum.photos/200/100" class="img-fluid"  alt="img">
+                <div class="card-body">
+                    <h4 class="card-title">Warning card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn col-6 btn-danger">Voir plus ...</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    <hr>
+    <div class="row align-items-center justify-content-center info" id="info">
+        <div class="col-md-6 h-100">
+            <img class="img-fluid info-img" src="{{ asset('images/man-mechanic-and-woman-customer-look-at-the-car-hood-and-discuss-repairs.jpg') }}" alt="">
+        </div>
+        <div class="col-md-6 h-100">
+            <h1>Notre <strong class="text-danger">garage</strong></h1>
+            <p class="mt-3 mb-3 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias, debitis deserunt ea eaque eius fugit id illo libero magnam magni maiores modi mollitia nam, nesciunt nihil, officiis pariatur quos repudiandae suscipit temporibus ullam vel veritatis! Alias error est eum in incidunt neque nulla provident quam qui saepe? Alias assumenda atque beatae, consequuntur, corporis culpa enim est explicabo, fuga ipsum itaque modi molestiae molestias nostrum officia possimus quasi rem sapiente sit suscipit ut vitae voluptatem? Asperiores debitis laudantium non quis saepe vel veritatis voluptatum! Adipisci animi aspernatur, consequatur consequuntur deleniti esse impedit ipsam labore maxime mollitia odit porro quaerat quam quia repellat repellendus saepe totam ullam vero voluptas! Accusamus aperiam commodi consequatur debitis dolores eius error eveniet excepturi hic id magni molestias nihil non nulla optio provident, quam, rem repellat, sed soluta tempore tenetur vel voluptatum. Enim excepturi illo natus sed velit. Blanditiis doloribus harum mollitia nihil quibusdam. Ea, officia!</p>
+            <a href="{{ path('catalogue') }}" class="info-btn btn btn-warning">Notre catalogue</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
