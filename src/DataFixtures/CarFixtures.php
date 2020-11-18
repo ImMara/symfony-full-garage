@@ -25,7 +25,7 @@ class CarFixtures extends Fixture
                 ->setModele($fcar)
                 ->setCover($coverImage)
                 ->setKm(mt_rand(0,1000000))
-                ->setPrix(mt_rand(1000,1000000))
+                ->setPrix(mt_rand(1000,100000))
                 ->setProprios(mt_rand(1,10))
                 ->setCylindre(mt_rand(800,8000))
                 ->setPuissance(mt_rand(10,2000))
