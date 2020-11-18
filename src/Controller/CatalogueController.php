@@ -20,5 +20,17 @@ class CatalogueController extends AbstractController
             'cars' => $cars
         ]);
     }
+    /**
+     * car details
+     * @route("/cars/{slug}",name="cars_show")
+     *
+     * @param car $car
+     * @return void
+     */
+    public function show(Car $car){
+        return  $this->render('catalogue/car.html.twig',[
+            'car'=>$car
+        ]);
+    }
 
 }

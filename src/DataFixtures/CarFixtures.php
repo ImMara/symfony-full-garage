@@ -14,7 +14,7 @@ class CarFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker =Factory::create('Fr-fr');
-        for($i = 1; $i <=9; $i++){
+        for($c = 1; $c <=9; $c++){
 
             $car = new Car();
             $slugify =new Slugify();
@@ -45,13 +45,13 @@ class CarFixtures extends Fixture
 
                 $manager->persist($car);
 
-                // for($i=1; $i <= rand(2,5); $i++){
-                //     $image = new Image();
-                //     $image->setUrl('https://placekitten.com/350/350')
-                //         ->setCaption($faker->sentence())
-                //         ->setCarId($car);
-                //     $manager->persist($image);    
-                // }
+                for($i=1; $i <= rand(2,5); $i++){
+                    $image = new Image();
+                    $image->setUrl('https://placekitten.com/350/350')
+                        ->setCaption($faker->sentence())
+                        ->setCar($car);
+                    $manager->persist($image);    
+                }
         }
         $manager->flush();
     }
