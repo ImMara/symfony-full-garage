@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Garage - catalogue{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+    <div class="col-12">
+        <h3>A propos de notre societe</h3>
+        <hr class="bg-light">
+        <p>{{ about.0.description }}</p>
+    </div>
+        <div class="col-12">
+            <h3>Notre adresse</h3>
+            <hr class="bg-light">
+            <p>{{ about.0.adresse }}</p>
+        </div>
+        <div class="col-12">
+            <h3>Notre adresse mail</h3>
+            <hr class="bg-light">
+            <p>Email : <strong class="text-warning">{{ about.0.email }}</strong> </p>
+        </div>
+    </div>
+{% endblock %}
