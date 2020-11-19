@@ -3,25 +3,27 @@
 {% block title %}Garage - catalogue{% endblock %}
 
 {% block body %}
-<div class="container">
-<div class="row">
-<div id="carouselExampleCaptions" class=" col-8 carousel slide" data-ride="carousel">
+    <div class="container">
+        <div class="row">
+            <div id="carouselExampleCaptions" class="mt-2 mb-2 ml-0 mr-0 col-12 carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     {% for image in car.images %}
-                        <li data-target="#carouselExampleCaptions" data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>    
+                        <li data-target="#carouselExampleCaptions"
+                            data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>
                     {% endfor %}
-                </ol>    
+                </ol>
                 <div class="carousel-inner">
                     {% for image in car.images %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ image.url }}" class="d-block w-100" alt="image de {{ car.slug }}">
+                            <img src="{{ image.url }}" class="d-block w-100" alt="image de {{ car.slug }}"
+                                 style="object-fit:cover; height:350px">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ car.modele }} {{ car.marque }}</h5>
                                 <p>{{ image.caption }}</p>
                             </div>
                         </div>
                     {% endfor %}
-                    </div>
+                </div>
                 <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -31,6 +33,39 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-</div>
-</div>
+        </div>
+            <hr class="bg-danger">
+            <div class="row">
+                <div class="col-6">
+                    <p><span class="text-warning">Marque:</span>  {{ car.marque }} </p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">Modele :</span> {{ car.modele }} </p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">km :</span>  {{ car.km }} km</p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">prix :</span>  {{ car.prix }} €</p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">Nombre de proprietaire :</span>  {{ car.proprios }}</p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">cylindre :</span>  {{ car.cylindre }} CC</p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">Mise en circulation :</span>  {{ car.dateMiseCirculation | date('d/m/Y') }}</p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">Transmission :</span>  {{ car.transmission }} roues motrices</p>
+                    <a href="#" class="btn btn-outline-danger mb-1 mt-1 col-12">Buy</a>
+                    <a href="{{ path('catalogue') }}" class="btn btn-outline-warning mb-1 mt-1 col-12">Retour vers le catalogue</a>
+                    <a href="{{ path('contact') }}" class="btn btn-outline-warning mb-1 mt-1 col-12">Des questions? Contactez-nous</a>
+                </div>
+                <div class="col-6">
+                    <p><span class="text-warning">description :</span> </p>
+                    <p>{{ car.description }}</p>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">Option :</span>  </p>
+                    <div>
+                        {{ car.options | raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

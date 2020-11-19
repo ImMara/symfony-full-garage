@@ -25,7 +25,7 @@ class CatalogueController extends AbstractController
      * @route("/cars/{slug}",name="cars_show")
      *
      * @param car $car
-     * @return void
+     * @return Response
      */
     public function show(Car $car){
         return  $this->render('catalogue/car.html.twig',[

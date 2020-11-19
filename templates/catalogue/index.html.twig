@@ -10,7 +10,7 @@
     {% for car in cars %}
         {% set url = path('cars_show',{'slug':car.slug }) %}
         <div class="col-md-4  mb-2">
-            <div class="card border-warning">
+            <div class="card border-warning" style="height: 450px">
                 <div class="card-header">{{ car.marque }} <strong class="text-warning">{{ car.modele }}</strong></div>
                 <img src="{{ car.cover }}" class="img-fluid"  alt="{{ car.modele }}">
                 <div class="card-body">
