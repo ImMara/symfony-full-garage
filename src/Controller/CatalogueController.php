@@ -32,5 +32,4 @@ class CatalogueController extends AbstractController
             'car'=>$car
         ]);
     }
-
 }
