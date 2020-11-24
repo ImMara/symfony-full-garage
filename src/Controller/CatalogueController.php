@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Car;
+use App\Form\CatalogueType;
 use App\Repository\CarRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatalogueController extends AbstractController
 {
+
     /**
      * @Route("/catalogue", name="catalogue")
      */
@@ -20,6 +22,7 @@ class CatalogueController extends AbstractController
             'cars' => $cars
         ]);
     }
+
     /**
      * car details
      * @route("/cars/{slug}",name="cars_show")
@@ -32,4 +35,23 @@ class CatalogueController extends AbstractController
             'car'=>$car
         ]);
     }
+
+    /**
+     * fonction d'ajout d'une annonce de voiture
+     * @route("/catalogue/new", name="new")
+     *
+     * @param CatalogueType $car
+     * @return Response
+     */
+    public function news ()
+    {
+        $car = new Car();
+        $form = $this->createForm(CatalogueType::class , $car);
+
+        return $this->render('catalogue/new.html.twig' , [
+            'form' => $form->createView()
+        ]);
+    }
+
+
 }

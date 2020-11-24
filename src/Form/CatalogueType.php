@@ -35,4 +35,5 @@ class CatalogueType extends AbstractType
             'data_class' => Car::class,
         ]);
     }
+
 }

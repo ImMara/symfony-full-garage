@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Nouvelle annonce de voiture
+{% endblock %}
+
+{#{% form_theme myForm _self %}#}
+
+{% block body %}
+    <div class="container">
+        <h1>Crée une nouvelle annonce</h1>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-warning">Crée la nouvelle annonce</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
