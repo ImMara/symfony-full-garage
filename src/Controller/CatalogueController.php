@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Car;
 use App\Form\CatalogueType;
 use App\Repository\CarRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,15 +45,28 @@ class CatalogueController extends AbstractController
      * @param CatalogueType $car
      * @return Response
      */
-    public function news ()
+    public function news (EntityManagerInterface $manager, Request $request)
     {
         $car = new Car();
         $form = $this->createForm(CatalogueType::class , $car);
 
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $manager->persist($car);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'annonce <strong>{$car->getSlug()}</strong> a bien été enregistrée"
+            );
+
+            return $this->redirectToRoute('cars_show',[
+                'slug' => $car->getSlug()
+            ]);
+        }
         return $this->render('catalogue/new.html.twig' , [
-            'form' => $form->createView()
+            'myForm' => $form->createView()
         ]);
     }
-
-
 }
