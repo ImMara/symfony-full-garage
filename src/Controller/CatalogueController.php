@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Car;
+use App\Entity\Image;
 use App\Form\CatalogueType;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,11 +48,18 @@ class CatalogueController extends AbstractController
     public function news (EntityManagerInterface $manager, Request $request)
     {
         $car = new Car();
+
         $form = $this->createForm(CatalogueType::class , $car);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            foreach($car->getImages() as $image){
+                $image->setCar($car);
+                $manager->persist($image);
+            }
+
             $manager->persist($car);
             $manager->flush();
 

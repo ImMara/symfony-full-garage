@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Car;
+use App\Entity\Image;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -15,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CatalogueType extends AbstractType
 {
+
     private function getConfiguration($label,$placeholder, $options=[]){
         return array_merge([
             'label'=>$label,
@@ -35,7 +38,7 @@ class CatalogueType extends AbstractType
             ->add('proprios',IntegerType::class,$this->getConfiguration('Nombre de proprietaire','indiquez un nombre'))
             ->add('cylindre',IntegerType::class,$this->getConfiguration('Cylindrée','cylindrée moteur de votre voiture'))
             ->add('puissance',IntegerType::class,$this->getConfiguration('Puissance en chevaux','exemple : 450'))
-            ->add('carburant',TextType::class,$this->getConfiguration('Carburant','essance ou diesel?'))
+            ->add('carburant',TextType::class,$this->getConfiguration('Carburant','essence ou diesel?'))
             ->add('dateMiseCirculation',DateType::class,$this->getConfiguration('Date de premiere mise en circulation',''))
             ->add('transmission',IntegerType::class,$this->getConfiguration('roue motrice','exemple : 2 ou 4'))
             ->add('description',TextareaType::class, $this->getConfiguration('Description','Déscription détaillée de votre voiture'))
@@ -43,6 +46,12 @@ class CatalogueType extends AbstractType
             ->add('slug', TextType::class, $this->getConfiguration('Slug','Adresse web (automatique)',[
                 'required' => false
             ]))
+            ->add('images', CollectionType::class,
+                [
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true
+                ])
         ;
     }
 
