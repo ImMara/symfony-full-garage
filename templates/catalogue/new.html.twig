@@ -15,7 +15,6 @@
         {{ form_end(myForm) }}
     </div>
 {% endblock %}
-{% block myForm_row %}
     {% block _annonce_images_widget %}
         {# Définition du champ annonce_image, la variable form correspond au champ annonce_image #}
         <p>Ici, vous pouvez ajouter vos propres images</p>
@@ -52,11 +51,9 @@
                     <button type="button" class="btn btn-danger" data-action="delete" data-target='#block_{{id}}'>X</button>
                 </div>
             </div>
-
         </div>
     {% endblock %}
 
-{% endblock %}
 {% block javascripts %}
     <script>
         const addImage = document.querySelector("#add-image")

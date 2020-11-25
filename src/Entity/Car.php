@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\CarRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CarRepository::class)
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields={"marque","slug"})
  */
 class Car
 {
@@ -99,6 +103,18 @@ class Car
         $this->images = new ArrayCollection();
     }
 
+    /** crée un slug automatiquement
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug()
+    {
+        if(empty($this->slug))
+        {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->marque.'-'. $this->modele.'-'.rand(1,100000));
+        }
+    }
 
     public function getId(): ?int
     {

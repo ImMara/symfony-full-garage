@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatalogueController extends AbstractController
 {
-
     /**
      * @Route("/catalogue", name="catalogue")
      */

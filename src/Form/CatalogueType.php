@@ -15,13 +15,13 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CatalogueType extends AbstractType
 {
-    private function getConfiguration($label,$placeholder){
-        return [
+    private function getConfiguration($label,$placeholder, $options=[]){
+        return array_merge([
             'label'=>$label,
             'attr'=> [
                 'placeholder'=>$placeholder
             ]
-        ];
+        ], $options);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -37,10 +37,12 @@ class CatalogueType extends AbstractType
             ->add('puissance',IntegerType::class,$this->getConfiguration('Puissance en chevaux','exemple : 450'))
             ->add('carburant',TextType::class,$this->getConfiguration('Carburant','essance ou diesel?'))
             ->add('dateMiseCirculation',DateType::class,$this->getConfiguration('Date de premiere mise en circulation',''))
-            ->add('transmission')
+            ->add('transmission',IntegerType::class,$this->getConfiguration('roue motrice','exemple : 2 ou 4'))
             ->add('description',TextareaType::class, $this->getConfiguration('Description','Déscription détaillée de votre voiture'))
             ->add('options',TextareaType::class,$this->getConfiguration('Option de votre voiture','vos options ici'))
-            ->add('slug',TextType::class, $this->getConfiguration('Slug','Adresse web (automatique)'))
+            ->add('slug', TextType::class, $this->getConfiguration('Slug','Adresse web (automatique)',[
+                'required' => false
+            ]))
         ;
     }
 
