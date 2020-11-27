@@ -15,8 +15,7 @@
                 <div class="carousel-inner">
                     {% for image in car.images %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ image.url }}" class="d-block w-100" alt="image de {{ car.slug }}"
-                                 style="object-fit:cover; height:350px">
+                            <img src="{{ image.url }}" class="d-block w-100" alt="image de {{ car.slug }}" style="object-fit:cover; height:350px">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ car.modele }} {{ car.marque }}</h5>
                                 <p>{{ image.caption }}</p>
