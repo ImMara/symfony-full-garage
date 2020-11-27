@@ -26,19 +26,6 @@ class CatalogueController extends AbstractController
     }
 
     /**
-     * car details
-     * @route("/cars/{slug}",name="cars_show")
-     *
-     * @param car $car
-     * @return Response
-     */
-    public function show(Car $car){
-        return  $this->render('catalogue/car.html.twig',[
-            'car'=>$car
-        ]);
-    }
-
-    /**
      * fonction d'ajout d'une annonce de voiture
      * @route("/catalogue/new", name="new")
      *
@@ -74,6 +61,55 @@ class CatalogueController extends AbstractController
         }
         return $this->render('catalogue/new.html.twig' , [
             'myForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * car details
+     * @route("/catalogue/{slug}",name="cars_show")
+     *
+     * @param car $car
+     * @return Response
+     */
+    public function show(Car $car){
+        return  $this->render('catalogue/car.html.twig',[
+            'car'=>$car
+        ]);
+    }
+
+    /**
+     * Formulaire d'edition
+     * @route("catalogue/{slug}/edit", name="car_edit")
+     * @param Car $car
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function edit(Car $car, Request $request,EntityManagerInterface $manager)
+    {
+        $form2 = $this->createForm(CatalogueType::class,$car);
+        $form2->handleRequest($request);
+
+        if($form2->isSubmitted() && $form2->isValid())
+        {
+            foreach($car->getImages() as $image){
+               $image->setCar($car);
+               $manager->persist($image);
+            }
+            $manager->persist($car);
+            $manager->flush();
+            $this->addFlash(
+              'success',
+                    "l'annonce<strong>{$car->getSlug()}</strong> a bien été modifier"
+            );
+            return $this->redirectToRoute('cars_show',[
+                'slug'=>$car->getSlug()
+            ]);
+        }
+
+        return $this->render('catalogue/edit.html.twig',
+        [
+            'myForm' => $form2->createView()
         ]);
     }
 }
