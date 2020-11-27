@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Garage - catalogue{% endblock %}
-
+{% set a = car.author %}
 {% block body %}
     <div class="container">
         <div class="row">
@@ -64,8 +64,9 @@
                     <div>
                         {{ car.options | raw }}
                     </div>
+                    <hr class="bg-danger">
+                    <p><span class="text-warning">Auteur :</span> {{ a.slug }} </p>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}
