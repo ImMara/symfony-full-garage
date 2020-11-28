@@ -46,7 +46,7 @@ class CatalogueController extends AbstractController
                 $image->setCar($car);
                 $manager->persist($image);
             }
-
+            $car->setAuthor($this->getUser());
             $manager->persist($car);
             $manager->flush();
 

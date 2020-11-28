@@ -45,7 +45,7 @@ class CarFixtures extends Fixture
                 ->setIntroduction($faker->sentence())
                 ->setDescription('<p>'.join('</p><p>', $faker->paragraphs(3)).'</p>')
                 ->setPassword($hash)
-                ->setPicture($picture);
+                ->setPicture(' ');
 
             $manager->persist($user);
             $users[]= $user; // ajouter l'utilisateur fraichement créé dans le tableau pour l'association avec les annonces
