@@ -80,7 +80,7 @@ class CarFixtures extends Fixture
 
             $car->setMarque($marque)
                 ->setModele($fcar)
-                ->setCover('https://placekitten.com/1000/350')
+                ->setCover('bna_brand_new_animal_anime_girls_furry_animal_ears_monster_girl_tanuki_short_hair1860875-5fc1c118887da.jpeg')
                 ->setKm(rand(0,1000000))
                 ->setPrix(rand(1000,100000))
                 ->setProprios(rand(1,10))

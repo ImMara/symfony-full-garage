@@ -6,9 +6,12 @@ use App\Entity\Car;
 use App\Entity\Image;
 use App\Form\CatalogueType;
 use App\Repository\CarRepository;
+use App\Form\PasswordUpdateType;
+use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,6 +46,26 @@ class CatalogueController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            $file = $form['cover']->getData();
+            if(!empty($file)){
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+                try{
+                    $file->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }
+                catch(FileException $e)
+                {
+                    return $e->getMessage();
+                }
+
+                $car->setCover($newFilename);
+            }
+
 
             foreach($car->getImages() as $image){
                 $image->setCar($car);

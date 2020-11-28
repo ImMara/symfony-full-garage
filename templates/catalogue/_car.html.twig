@@ -1,8 +1,8 @@
 
-<div class="col-md-4  mb-2">
-    <div class="card border-warning">
+<div class="col-lg-4  mb-2">
+    <div class="card border-warning" style="height:600px">
         <div class="card-header">{{ car.marque }} <strong class="text-warning">{{ car.modele }}</strong></div>
-        <img src="{{ car.cover }}" class="img-fluid"  alt="{{ car.modele }}">
+        <img src="/uploads/{{ car.cover }}" class="img-fluid"  alt="{{ car.modele }}" style="height: 250px;object-fit: cover">
         <div class="card-body">
             <h4 class="card-title">{{ car.modele }}</h4>
             <p class="card-text">{{ car.description }}</p>
