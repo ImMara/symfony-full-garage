@@ -3,19 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\UserImgModify;
-use App\Form\ImgModifyType;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
+use App\Entity\UserImgModify;
+use App\Form\ImgModifyType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -79,6 +81,7 @@ class AccountController extends AbstractController
 
                 $user->setPicture($newFilename);
             }
+
             // crypter le mot de passe avec l'encoder
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
@@ -105,11 +108,18 @@ class AccountController extends AbstractController
      * @Route("/account/profile", name="account_profile")
      *
      * @param Request $request
+     * @IsGranted("ROLE_USER")
      * @param EntityManagerInterface $manager
      * @return Response
      */
     public function profile(Request $request, EntityManagerInterface $manager)
     {
+        if(!empty($fileName))
+        {
+            $user->setPicture(
+                new File($this->getParameter('uploads_directory').'/'.$user->getPicture())
+            );
+        }
 
         $user = $this->getuser(); // récupérer l'utilisateur connecté
         $form = $this->createForm(AccountType::class,$user);
@@ -117,14 +127,16 @@ class AccountController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $user->setSlug('')
+                ->setPicture($fileName);
             $manager->persist($user);
             $manager->flush();
             $this->addFlash(
                 'success',
                 'Les données ont été modifiée avec succés'
             );
+            return $this->redirectToRoute('account_index');
         }
-
         return $this->render("account/profile.html.twig",[
             'myForm' => $form->createView()
         ]);
@@ -136,6 +148,7 @@ class AccountController extends AbstractController
      * @Route("/account/password-update", name="account_password")
      * @param Request $request
      * @param EntityManagerInterface $manager
+     * @IsGranted("ROLE_USER")
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
@@ -164,7 +177,7 @@ class AccountController extends AbstractController
                     'Votre mot de passe a bien été modifié'
                 );
 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('account_index');
 
             }
         }
@@ -173,12 +186,15 @@ class AccountController extends AbstractController
         return $this->render('account/password.html.twig',[
             'myForm' => $form->createView()
         ]);
+
+
     }
     /**
-     * PErmet de modifier l'avatar de l'utilisateur
+     * Permet de modifier l'avatar de l'utilisateur
      * @Route("/account/imgmodify", name="account_modifimg")
      *
      * @param Request $request
+     * @IsGranted("ROLE_USER")
      * @param EntityManagerInterface $manager
      * @return Response
      */
@@ -218,7 +234,7 @@ class AccountController extends AbstractController
                 'success',
                 'Votre avatar a bien été modifié'
             );
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('account_index');
 
         }
 
@@ -233,6 +249,7 @@ class AccountController extends AbstractController
      * @Route("/account/delimg", name="account_delimg")
      *
      * @param EntityManagerInterface $manager
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function removeImage(EntityManagerInterface $manager)
@@ -249,10 +266,9 @@ class AccountController extends AbstractController
             );
         }
 
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('account_index');
 
     }
-
 
 
 

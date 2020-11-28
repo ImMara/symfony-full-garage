@@ -6,6 +6,8 @@ use App\Entity\Car;
 use App\Entity\Image;
 use App\Form\CatalogueType;
 use App\Repository\CarRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,6 +84,7 @@ class CatalogueController extends AbstractController
      * @route("catalogue/{slug}/edit", name="car_edit")
      * @param Car $car
      * @param Request $request
+     * @Security("(is_granted('ROLE_USER') and user === car.getAuthor()) or is_granted('ROLE_ADMIN')", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier")
      * @param EntityManagerInterface $manager
      * @return Response
      */
@@ -112,4 +115,24 @@ class CatalogueController extends AbstractController
             'myForm' => $form2->createView()
         ]);
     }
+    /**
+     * Permet de supprimer une annonce
+     * @Route("/catalogue/{slug}/delete", name="delete")
+     * @Security("is_granted('ROLE_USER') and user === car.getAuthor()", message="Vous n'avez pas le droit d'accèder à cette ressource")
+     * @param Car $car
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function delete(Car $car, EntityManagerInterface $manager)
+    {
+        $this->addFlash(
+            'success',
+            "L'annonce <strong>{$car->getSlug()}</strong> a bien été supprimée"
+        );
+        $manager->remove($car);
+        $manager->flush();
+        return $this->redirectToRoute("catalogue");
+    }
+
+
 }

@@ -5,6 +5,9 @@
 {% block body %}
     <div class="container">
         <h1>Modification du profil</h1>
+        {% if app.user.picture != "" %}
+            <img src="/uploads/{{ app.user.picture }}" alt="avatar de {{app.user.email}}" style="width: 100%;height: 300px;object-fit: cover;">
+        {% endif %}
         {{form_start(myForm)}}
         {{form_widget(myForm)}}
         <button type="submit" class="btn btn-success">Enregistrer les modifications</button>

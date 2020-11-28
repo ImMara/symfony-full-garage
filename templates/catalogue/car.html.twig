@@ -58,14 +58,25 @@
                 </div>
                 <div class="col-6">
                     <p><span class="text-warning">description :</span> </p>
-                    <p>{{ car.description }}</p>
+                    <p>{{ car.description | raw | nl2br }}</p>
                     <hr class="bg-danger">
                     <p><span class="text-warning">Option :</span>  </p>
                     <div>
                         {{ car.options | raw }}
                     </div>
                     <hr class="bg-danger">
-                    <p><span class="text-warning">Auteur :</span> {{ a.slug }} </p>
+
+                    <p><span class="text-warning">
+                            {% if a.picture %}
+                                <img src="/uploads/{{a.picture}}" class="avatar avatar-medium mr-5" alt="" style="height:100px;width: 100px;object-fit: contain;border-radius: 50px">
+                            {% else %}
+                                <img src="http://placehold.it/300x300" class="avatar avatar-medium mr-5" alt=""  style="height:100px;width: 100px;object-fit: contain;border-radius: 50px">
+                            {% endif %}
+                        </span>{{ a.slug }} </p>
+                    {% if (app.user and app.user == car.author) or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('car_edit',{'slug': car.slug })}}" class="btn btn-secondary">Modification de l'annonce</a>
+                        <a href="{{ path('delete',{'slug': car.slug })}}" class="btn btn-danger" onclick="return confirm('êtes vous sûr de vouloir supprimer l\'annonce: {{ car.slug }}')">Supprimer</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

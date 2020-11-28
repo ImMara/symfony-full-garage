@@ -1,0 +1,15 @@
+
+<div class="col-md-4  mb-2">
+    <div class="card border-warning">
+        <div class="card-header">{{ car.marque }} <strong class="text-warning">{{ car.modele }}</strong></div>
+        <img src="{{ car.cover }}" class="img-fluid"  alt="{{ car.modele }}">
+        <div class="card-body">
+            <h4 class="card-title">{{ car.modele }}</h4>
+            <p class="card-text">{{ car.description }}</p>
+            <a href="{{ path('cars_show',{'slug':car.slug }) }}" class="btn btn-danger col-6">Voir plus ...</a>
+            {% if (app.user and app.user == car.author) or is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('car_edit',{'slug': car.slug })}}" class="btn btn-secondary">Modification de l'annonce</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
