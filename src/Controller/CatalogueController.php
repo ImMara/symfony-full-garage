@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Car;
+use App\Entity\User;
 use App\Entity\Image;
+use App\Form\CatalogueEditType;
 use App\Form\CatalogueType;
 use App\Repository\CarRepository;
 use App\Form\PasswordUpdateType;
@@ -12,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,9 +69,28 @@ class CatalogueController extends AbstractController
                 $car->setCover($newFilename);
             }
 
-
-            foreach($car->getImages() as $image){
-                $image->setCar($car);
+//            dump($car->getImages());
+            foreach($car->getImages() as $image)
+            {
+                $file = $image->getUrl();
+                dump($file->getClientOriginalName());
+                if(!empty($file)){
+                    $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+                    try{
+                        $file->move(
+                            $this->getParameter('uploads_directory'),
+                            $newFilename
+                        );
+                    }
+                    catch(FileException $e)
+                    {
+                        return $e->getMessage();
+                    }
+                    $image->setCar($car);
+                    $image->setUrl($newFilename);
+                }
                 $manager->persist($image);
             }
             $car->setAuthor($this->getUser());
@@ -113,15 +135,12 @@ class CatalogueController extends AbstractController
      */
     public function edit(Car $car, Request $request,EntityManagerInterface $manager)
     {
-        $form2 = $this->createForm(CatalogueType::class,$car);
-        $form2->handleRequest($request);
 
-        if($form2->isSubmitted() && $form2->isValid())
+        $form = $this->createForm(CatalogueEditType::class,$car);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
         {
-            foreach($car->getImages() as $image){
-               $image->setCar($car);
-               $manager->persist($image);
-            }
             $manager->persist($car);
             $manager->flush();
             $this->addFlash(
@@ -135,7 +154,7 @@ class CatalogueController extends AbstractController
 
         return $this->render('catalogue/edit.html.twig',
         [
-            'myForm' => $form2->createView()
+            'myForm' => $form->createView()
         ]);
     }
     /**

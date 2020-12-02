@@ -15,7 +15,7 @@
                 <div class="carousel-inner">
                     {% for image in car.images %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ image.url }}" class="d-block w-100" alt="image de {{ car.slug }}" style="object-fit:cover; height:350px">
+                            <img src="/uploads/{{ image.url }}" class="d-block w-100" alt="image de {{ car.slug }}" style="object-fit:cover; height:350px">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ car.modele }} {{ car.marque }}</h5>
                                 <p>{{ image.caption }}</p>
@@ -57,19 +57,19 @@
                 </div>
                 <div class="col-6">
                     <p><span class="text-warning">description :</span> </p>
-                    <p>{{ car.description | raw | nl2br }}</p>
+                    <p class="text-break">{{ car.description | raw | nl2br }}</p>
                     <hr class="bg-danger">
                     <p><span class="text-warning">Option :</span>  </p>
-                    <div>
+                    <div class="text-break">
                         {{ car.options | raw }}
                     </div>
                     <hr class="bg-danger">
 
                     <p><span class="text-warning">
                             {% if a.picture %}
-                                <img src="/uploads/{{a.picture}}" class="avatar avatar-medium mr-5" alt="" style="height:100px;width: 100px;object-fit: contain;border-radius: 50px">
+                                <img src="/uploads/{{a.picture}}" class="avatar avatar-medium mr-5" alt="" style="height:100px;width: 100px;object-fit: contain;">
                             {% else %}
-                                <img src="http://placehold.it/300x300" class="avatar avatar-medium mr-5" alt=""  style="height:100px;width: 100px;object-fit: contain;border-radius: 50px">
+                                <img src="http://placehold.it/300x300" class="avatar avatar-medium mr-5" alt=""  style="height:100px;width: 100px;object-fit: contain;">
                             {% endif %}
                         </span>{{ a.slug }} </p>
                     {% if (app.user and app.user == car.author) or is_granted('ROLE_ADMIN') %}

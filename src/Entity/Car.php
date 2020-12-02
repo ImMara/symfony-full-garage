@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Entity;
 
 use App\Repository\CarRepository;
@@ -36,8 +37,6 @@ class Car
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Image(mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"}, mimeTypesMessage="Vous devez upload un fichier jpg, png ou gif")
-     * @Assert\File(maxSize="1024k", maxSizeMessage="Taille du fichier trop grande")
      */
     private $cover;
 
@@ -97,6 +96,7 @@ class Car
     private $slug;
 
     /**
+     *
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="car", orphanRemoval=true)
      * @Assert\Valid()
      */
@@ -300,7 +300,9 @@ class Car
     }
 
     /**
+     *
      * @return Collection|Image[]
+     *
      */
     public function getImages(): Collection
     {

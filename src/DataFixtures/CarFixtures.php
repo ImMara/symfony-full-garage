@@ -99,7 +99,7 @@ class CarFixtures extends Fixture
 
                 for($i=1; $i <= rand(2,5); $i++){
                     $image = new Image();
-                    $image->setUrl('https://placekitten.com/350/350')
+                    $image->setUrl('bna_brand_new_animal_anime_girls_furry_animal_ears_monster_girl_tanuki_short_hair1860875-5fc1c118887da.jpeg')
                         ->setCaption($faker->sentence())
                         ->setCar($car);
                     $manager->persist($image);    

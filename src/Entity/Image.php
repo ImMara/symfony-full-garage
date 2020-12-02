@@ -19,20 +19,19 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Url(message="Cette url n'est pas valide")
+     * @ORM\Column(type="string", length=255 , nullable=true)
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *  @Assert\Length(min=10, max=255, minMessage="Le caption doit faire plus de 10 caractères", maxMessage="Le titre ne peut pas faire plus de 255 caractères")
+     * @Assert\Length(min=10, max=255, minMessage="Le caption doit faire plus de 10 caractères", maxMessage="Le titre ne peut pas faire plus de 255 caractères")
      */
     private $caption;
 
     /**
      * @ORM\ManyToOne(targetEntity=car::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $car;
 
@@ -41,12 +40,12 @@ class Image
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getUrl()
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl($url)
     {
         $this->url = $url;
 

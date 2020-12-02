@@ -10,6 +10,16 @@
     </head>
     <body>
     {% include 'partials/header.html.twig' %}
+    {% for label, messages in app.flashes %}
+        <div class="container">
+            <div class="alert alert-{{label}}">
+                {% for message in messages %}
+                    <p>{{ message | raw }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endfor %}
     {% block body %}{% endblock %}
     {% block javascripts %}{% endblock %}
     {% include 'partials/footer.html.twig' %}

@@ -16,15 +16,15 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class CatalogueType extends ApplicationType
+class CatalogueEditType extends ApplicationType
 {
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options )
     {
         $builder
             ->add('marque',TextType::class,$this->getConfiguration('marque','Marque de votre voiture'))
             ->add('modele',TextType::class,$this->getConfiguration('modele','Modéle de votre voiture'))
-            ->add('cover',FileType::class,$this->getConfiguration('cover','Veuillez entrez l\'adresse de votre image'))
+//            ->add('cover',FileType::class,$this->getConfiguration('cover','Veuillez entrez l\'adresse de votre image'))
             ->add('km',IntegerType::class,$this->getConfiguration('Nombre de km','km au compteur'))
             ->add('prix',MoneyType::class, $this->getConfiguration('Prix de votre voiture','indiquer le prix que vous voulez'))
             ->add('proprios',IntegerType::class,$this->getConfiguration('Nombre de proprietaire','indiquez un nombre'))
@@ -39,12 +39,12 @@ class CatalogueType extends ApplicationType
                 'required' => false,
                 'disabled'=> true
             ]))
-            ->add('images', CollectionType::class,
-                [
-                'entry_type' => ImageType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                ])
+//            ->add('images', CollectionType::class,
+//                [
+//                    'entry_type' => ImageType::class,
+//                    'allow_add' => true,
+//                    'allow_delete' => true,
+//                ])
         ;
     }
 
@@ -54,5 +54,4 @@ class CatalogueType extends ApplicationType
             'data_class' => Car::class,
         ]);
     }
-
 }
